@@ -8,8 +8,17 @@ const Products = ({ error, isLoading, products }) => {
       {products &&
         products.data.map((product, i) => {
           return (
-            <ul className={styles.product} key={i}>
-              {product.name}
+            <ul
+              style={{
+                backgroundColor:
+                  product.color !== undefined ? `${product.color}` : "unset",
+              }}
+              className={styles.product}
+              key={i}
+            >
+              <span>{product.id}</span>
+              <span className={styles.name}>{product.name}</span>
+              <span>{product.year}</span>
             </ul>
           );
         })}
