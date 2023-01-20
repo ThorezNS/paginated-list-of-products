@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
+import Products from "./components/Products";
 
 function App() {
-  const [products, setProducts] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [products, setProducts] = useState(null);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [productsPerPage, setProductsPerPage] = useState(5);
 
   useEffect(() => {
     fetch("https://reqres.in/api/products")
@@ -25,13 +28,8 @@ function App() {
   }, []);
 
   return (
-    <div>
-      {error && <p>{error}</p>}
-      {isLoading && <p>Loading...</p>}
-      {products &&
-        products.data.map((product, index) => {
-          return <p key={index}>{product.name}</p>;
-        })}
+    <div className="container">
+      <Products error={error} isLoading={isLoading} products={products} />
     </div>
   );
 }

@@ -12,3 +12,12 @@ body {
   box-sizing: border-box;
   list-style: none;
 }
+
+.container {
+  display: flex;
+  margin: 2%;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: flex-start;
+}

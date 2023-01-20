@@ -1,0 +1,17 @@
+.wrapper {
+  width: 16vw;
+  min-width: 200px;
+  max-width: 300px;
+  border-radius: 5px;
+  border: #010020 2px solid;
+}
+
+.product {
+  width: 100%;
+  padding: 3px 5px;
+  border-bottom: #010020 1px solid;
+}
+
+.product:last-child {
+  border-bottom: none;
+}
