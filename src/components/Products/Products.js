@@ -6,7 +6,7 @@ const Products = ({ error, isLoading, products }) => {
       {error && <p>{error}</p>}
       {isLoading && <p>Loading...</p>}
       {products &&
-        products.data.map((product, i) => {
+        products.map((product, i) => {
           return (
             <ul
               style={{

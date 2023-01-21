@@ -5,7 +5,8 @@ import SearchInput from "./components/SearchInput/SearchInput";
 function App() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [products, setProducts] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [copyOfProducts, setCopyOfProducts] = useState([]);
   const [inputValue, setInputValue] = useState("");
   // const [currentPage, setCurrentPage] = useState(1);
   // const [productsPerPage, setProductsPerPage] = useState(5);
@@ -20,7 +21,8 @@ function App() {
         return products.json();
       })
       .then((data) => {
-        setProducts(data);
+        setProducts(data.data);
+        setCopyOfProducts(data.data);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -28,6 +30,19 @@ function App() {
         setIsLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    if (products) {
+      const filteredProduct = products.filter((product) => {
+        return product.id === parseInt(inputValue);
+      });
+      if (inputValue > 0 && inputValue <= products.length) {
+        setProducts(filteredProduct);
+      } else {
+        setProducts(copyOfProducts);
+      }
+    }
+  }, [inputValue]);
 
   const handleChange = (e) => {
     const result = e.target.value.replace(/\D/g, "");
