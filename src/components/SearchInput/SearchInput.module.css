@@ -1,0 +1,8 @@
+.input {
+  width: 8vw;
+  height: 21px;
+  min-width: 100px;
+  max-width: 150px;
+  margin-bottom: 13px;
+  text-align: center;
+}
