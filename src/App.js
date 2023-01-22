@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Modal from "./components/Modal/Modal";
 import Products from "./components/Products/Products";
 import SearchInput from "./components/SearchInput/SearchInput";
 
@@ -6,8 +7,10 @@ function App() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
+  const [productDetails, setProductsDetails] = useState({});
   const [copyOfProducts, setCopyOfProducts] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
   // const [currentPage, setCurrentPage] = useState(1);
   // const [productsPerPage, setProductsPerPage] = useState(5);
 
@@ -49,10 +52,29 @@ function App() {
     setInputValue(result);
   };
 
+  const openTheModal = (obj) => {
+    setModalOpen(true);
+    setProductsDetails(obj);
+  };
+
+  const closeTheModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <div className="container">
       <SearchInput inputValue={inputValue} handleChange={handleChange} />
-      <Products error={error} isLoading={isLoading} products={products} />
+      <Products
+        error={error}
+        isLoading={isLoading}
+        products={products}
+        openTheModal={openTheModal}
+      />
+      <Modal
+        productDetails={productDetails}
+        closeTheModal={closeTheModal}
+        modalOpen={modalOpen}
+      />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import styles from "./Products.module.css";
 
-const Products = ({ error, isLoading, products }) => {
+const Products = ({ error, isLoading, products, openTheModal }) => {
   return (
     <div className={styles.wrapper}>
       {error && <p>{error}</p>}
@@ -9,6 +9,7 @@ const Products = ({ error, isLoading, products }) => {
         products.map((product, i) => {
           return (
             <ul
+              onClick={() => openTheModal(product)}
               style={{
                 backgroundColor:
                   product.color !== undefined ? `${product.color}` : "unset",

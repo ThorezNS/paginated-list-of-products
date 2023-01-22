@@ -1,0 +1,40 @@
+.container {
+  min-width: 100px;
+  max-width: 95%;
+  min-height: 100px;
+  max-height: 95%;
+  position: fixed;
+  left: calc(50% + 50px);
+  top: 25%;
+  padding: 13px;
+  border-radius: 5px;
+  border: #010020 1px solid;
+  color: white;
+  transform: translate(-50%, -50%) scale(0, 0);
+  transition: transform 200ms ease-in-out;
+  background-color: rgba(43, 56, 235, 0.95);
+  z-index: 10;
+}
+
+.container ul {
+  margin-bottom: 8px;
+}
+
+.open {
+  transform: translate(-50%, -50%) scale(1, 1);
+}
+
+.button {
+  position: absolute;
+  top: 0;
+  right: 13px;
+  font-size: 21px;
+  color: white;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.details {
+  margin-top: 21px;
+}
