@@ -1,0 +1,14 @@
+.container button {
+  width: 26px;
+  height: 26px;
+  margin: 13px;
+  background-color: transparent;
+  border-radius: 3px;
+  border: 1px solid #a9a9a9;
+  cursor: pointer;
+}
+
+.container button:hover {
+  color: #8fadff;
+  border-color: #8fadff;
+}

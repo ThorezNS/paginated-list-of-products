@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Modal from "./components/Modal/Modal";
+import { Pagination } from "./components/Pagination/Pagination";
 import Products from "./components/Products/Products";
 import SearchInput from "./components/SearchInput/SearchInput";
 
@@ -11,8 +12,8 @@ function App() {
   const [copyOfProducts, setCopyOfProducts] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [productsPerPage, setProductsPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(5);
 
   useEffect(() => {
     fetch("https://reqres.in/api/products")
@@ -61,13 +62,33 @@ function App() {
     setModalOpen(false);
   };
 
+  const previousTable = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  const nextTable = () => {
+    const totalPages = Math.ceil(products.length / productsPerPage);
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  const indexOfLastProduct = productsPerPage * currentPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const productsInTheTable = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
   return (
     <div className="container">
       <SearchInput inputValue={inputValue} handleChange={handleChange} />
       <Products
         error={error}
         isLoading={isLoading}
-        products={products}
+        products={productsInTheTable}
         openTheModal={openTheModal}
       />
       <Modal
@@ -75,6 +96,7 @@ function App() {
         closeTheModal={closeTheModal}
         modalOpen={modalOpen}
       />
+      <Pagination previousTable={previousTable} nextTable={nextTable} />
     </div>
   );
 }
