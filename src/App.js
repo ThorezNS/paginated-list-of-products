@@ -9,11 +9,11 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const [productDetails, setProductsDetails] = useState({});
-  const [copyOfProducts, setCopyOfProducts] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(null);
   const [productsPerPage] = useState(5);
+  const [productsInTheTable, setProductsInTheTable] = useState([]);
 
   useEffect(() => {
     fetch("https://reqres.in/api/products")
@@ -26,7 +26,7 @@ function App() {
       })
       .then((data) => {
         setProducts(data.data);
-        setCopyOfProducts(data.data);
+        setCurrentPage(1);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -36,17 +36,31 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (products) {
-      const filteredProduct = products.filter((product) => {
-        return product.id === parseInt(inputValue);
-      });
-      if (inputValue > 0 && inputValue <= products.length) {
-        setProducts(filteredProduct);
-      } else {
-        setProducts(copyOfProducts);
-      }
-    }
+    getPaginatedTable();
+  }, [currentPage]);
+
+  useEffect(() => {
+    getProductById();
   }, [inputValue]);
+
+  const getProductById = () => {
+    const filteredProduct = products.filter((product) => {
+      return product.id === parseInt(inputValue);
+    });
+    if (inputValue > 0 && inputValue <= products.length) {
+      setProductsInTheTable(filteredProduct);
+    } else {
+      getPaginatedTable();
+    }
+  };
+
+  const getPaginatedTable = () => {
+    const indexOfLastProduct = productsPerPage * currentPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    setProductsInTheTable(
+      products.slice(indexOfFirstProduct, indexOfLastProduct)
+    );
+  };
 
   const handleChange = (e) => {
     const result = e.target.value.replace(/\D/g, "");
@@ -66,6 +80,7 @@ function App() {
     if (currentPage > 1) {
       setCurrentPage((prev) => prev - 1);
     }
+    setInputValue("");
   };
 
   const nextTable = () => {
@@ -73,14 +88,8 @@ function App() {
     if (currentPage < totalPages) {
       setCurrentPage((prev) => prev + 1);
     }
+    setInputValue("");
   };
-
-  const indexOfLastProduct = productsPerPage * currentPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const productsInTheTable = products.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct
-  );
 
   return (
     <div className="container">
@@ -88,7 +97,7 @@ function App() {
       <Products
         error={error}
         isLoading={isLoading}
-        products={productsInTheTable}
+        productsInTheTable={productsInTheTable}
         openTheModal={openTheModal}
       />
       <Modal

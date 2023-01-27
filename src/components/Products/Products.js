@@ -1,12 +1,12 @@
 import styles from "./Products.module.css";
 
-const Products = ({ error, isLoading, products, openTheModal }) => {
+const Products = ({ error, isLoading, productsInTheTable, openTheModal }) => {
   return (
     <div className={styles.wrapper}>
       {error && <p>{error}</p>}
       {isLoading && <p>Loading...</p>}
-      {products &&
-        products.map((product, i) => {
+      {productsInTheTable &&
+        productsInTheTable.map((product, i) => {
           return (
             <ul
               onClick={() => openTheModal(product)}
