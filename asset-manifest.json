@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/paginated-list-of-products/static/css/main.a579a321.css",
+    "main.js": "/paginated-list-of-products/static/js/main.edf2c575.js",
+    "index.html": "/paginated-list-of-products/index.html",
+    "main.a579a321.css.map": "/paginated-list-of-products/static/css/main.a579a321.css.map",
+    "main.edf2c575.js.map": "/paginated-list-of-products/static/js/main.edf2c575.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a579a321.css",
+    "static/js/main.edf2c575.js"
+  ]
+}
