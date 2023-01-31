@@ -12,7 +12,7 @@ function App() {
   const [inputValue, setInputValue] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(null);
-  const [productsPerPage] = useState(2);
+  const [productsPerPage] = useState(5);
   const [productsInTheTable, setProductsInTheTable] = useState([]);
   const [hash, setHash] = useState("");
 
