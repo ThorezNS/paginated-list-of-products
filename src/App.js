@@ -12,8 +12,9 @@ function App() {
   const [inputValue, setInputValue] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(null);
-  const [productsPerPage] = useState(5);
+  const [productsPerPage] = useState(2);
   const [productsInTheTable, setProductsInTheTable] = useState([]);
+  const [hash, setHash] = useState("");
 
   useEffect(() => {
     fetch("https://reqres.in/api/products")
@@ -36,12 +37,25 @@ function App() {
   }, []);
 
   useEffect(() => {
-    getPaginatedTable();
+    getPaginatedTable(currentPage);
+    getThePageHash();
   }, [currentPage]);
 
   useEffect(() => {
     getProductById();
   }, [inputValue]);
+
+  useEffect(() => {
+    window.location.hash = hash;
+  }, [hash]);
+
+  const getThePageHash = () => {
+    if (currentPage) return setHash(`page_${currentPage.toString()}`);
+  };
+
+  const getTheIdHash = (array) => {
+    setHash(`id_${array[0].id}`);
+  };
 
   const getProductById = () => {
     const filteredProduct = products.filter((product) => {
@@ -49,13 +63,15 @@ function App() {
     });
     if (inputValue > 0 && inputValue <= products.length) {
       setProductsInTheTable(filteredProduct);
+      getTheIdHash(filteredProduct);
     } else {
-      getPaginatedTable();
+      getPaginatedTable(currentPage);
+      getThePageHash();
     }
   };
 
-  const getPaginatedTable = () => {
-    const indexOfLastProduct = productsPerPage * currentPage;
+  const getPaginatedTable = (pageNumber) => {
+    const indexOfLastProduct = productsPerPage * pageNumber;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     setProductsInTheTable(
       products.slice(indexOfFirstProduct, indexOfLastProduct)
